@@ -1,29 +1,31 @@
 # Eivid
-Short description and motivation.
 
-## Usage
-How to use my plugin.
+Never stops streaming awesome videos, yay!
 
 ## Installation
+
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'eivid'
-```
 
-And then execute:
+gem 'eivid', git: 'https://github.com/eitje-app/eivid_engine', branch: 'production'
+
+```
+Create and run the required migrations:
+
 ```bash
-$ bundle
+
+$ rails eivid:install:migrations
+$ rails db:migrate
+
 ```
+Add the following to your routes.rb:
+```ruby
 
-Or install it yourself as:
-```bash
-$ gem install eivid
+mount Eivid::Engine => "/eivid"
+
 ```
+Set the following environment variables in your application:
+```ruby
 
-## Contributing
-Contribution directions go here.
-
-## License
-The gem is available as open source under the terms of the [MIT License](https://opensource.org/licenses/MIT).
-# eivid_engine
+```
