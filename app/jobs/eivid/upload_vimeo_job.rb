@@ -5,12 +5,12 @@ module Eivid
       @video_record = video_record
       @video_file   = video_file
       
-      # upload_to_vimeo
-      # @video_url    = @video_upload["link"]
-      @video_url    = "www.filmpje.nl"
+      upload_to_vimeo
+      @video_url    = @video_upload["link"]
 
       update_record
       notify_front
+      check_status
     end
 
     private
@@ -28,6 +28,10 @@ module Eivid
 
     def notify_front
       # implement
+    end
+
+    def check_status
+      CheckVimeoStatusJob.perform_later(video_record: @video_record)
     end
 
   end
