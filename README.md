@@ -12,6 +12,33 @@ gem 'eivid', git: 'https://github.com/eitje-app/eivid_engine', branch: 'producti
 gem 'vimeo_me2', git: "https://github.com/bo-oz/vimeo_me2.git"
 
 ```
+Add the following file to your app's config/initializers directory:
+
+```ruby
+
+# eivid.rb
+
+Eivid.set_mattr_accessors do |config|
+  config.owner_model = "owner"
+end
+
+```
+
+In this file, set the {owner_model} to your apps owner of videos, which generates the following methods (in this example config.owner_model is set to "organisation"):
+
+```ruby
+
+# retrieves the owner_id from a record
+Eivid::Video.first.organisation_id
+
+# returns the owner record of your application, through a belongs_to association
+Eivid::Video.first.organisation 
+
+# scope, which returns all records for your application's organisation
+Eivid::Video.of_organisation(id)
+
+```
+
 Create and run the required migrations:
 
 ```bash

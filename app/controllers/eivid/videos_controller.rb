@@ -8,6 +8,7 @@ module Eivid
       video_file   = params["video_file"]
 
       UploadVimeoJob.perform_now(video_record: video_record, video_file: video_file)
+      render json: video_record
     end
 
   end
