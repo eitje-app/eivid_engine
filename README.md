@@ -29,4 +29,6 @@ mount Eivid::Engine => "/eivid"
 Set the following environment variables in your application:
 ```ruby
 
+VIMEO_ACCESS_TOKEN
+
 ```
