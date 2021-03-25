@@ -39,6 +39,14 @@ Eivid::Video.of_organisation(id)
 
 ```
 
+Witin your application's owner model (in this example Organisation), add to following association:
+
+```ruby
+
+has_many :videos, class_name: 'Eivid::Video', foreign_key: 'owner_id'
+
+```
+
 Create and run the required migrations:
 
 ```bash
