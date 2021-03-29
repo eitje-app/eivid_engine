@@ -21,13 +21,10 @@ module Eivid::RequestService
     end
 
     def upload_video(video_path:)
-      @file = File.open(video_path) 
-
-      @request  = HTTParty.post UPLOAD_URL, **upload_video_headers
-      @response = JSON.parse(@request).deep_symbolize_keys
-
+      @file        = File.open(video_path) 
+      @request     = HTTParty.post UPLOAD_URL, **upload_video_headers
+      @response    = JSON.parse(@request).deep_symbolize_keys
       @upload_link = @response.dig(:upload, :upload_link)
-      @video_link  = @response.dig(:link)
 
       tus_upload_to_vimeo
       @response
