@@ -23,6 +23,20 @@ module Eivid::RequestService
     def upload_video(video_path:)
       @file = File.open(video_path) 
 
+      @request  = HTTParty.post UPLOAD_URL, **upload_video_headers
+      @response = JSON.parse(@request).deep_symbolize_keys
+
+      @upload_link = @response.dig(:upload, :upload_link)
+      @video_link  = @response.dig(:link)
+
+      tus_upload_to_vimeo
+    end
+
+    def tus_upload_to_vimeo
+      HTTParty.patch @upload_link, body: @file.read, headers: tus_upload_to_vimeo_headers
+    end
+
+    def upload_video_headers
       body = {
         "upload" => {
           "approach" => "tus",
@@ -36,30 +50,17 @@ module Eivid::RequestService
         "Accept"        => "application/vnd.vimeo.*+json;version=3.4" 
       }
 
-      options = { body: body.to_json, headers: headers }
-
-      @request  = HTTParty.post UPLOAD_URL, **options
-      @response = JSON.parse(@request).deep_symbolize_keys
-
-      @upload_link = @response.dig(:upload, :upload_link)
-      @video_link  = @response.dig(:link)
-      @video_uri   = "#{BASE_URL}/#{@response.dig(:uri)}"
-      @approach    = @response.dig(:upload, :approach)
-
-      # binding.pry
-      upload_to_vimeo
+      { body: body.to_json, headers: headers }
     end
 
-    def upload_to_vimeo
-      headers = {
+
+    def tus_upload_to_vimeo_headers
+      {
         "Tus-Resumable" => "1.0.0",
         "Upload-Offset" => "0",
         "Content-Type"  => "application/offset+octet-stream",
         "Accept"        => "application/vnd.vimeo.*+json;version=3.4"
       }
-
-      # res = HTTParty.patch @upload_link, body: @file.read, headers: headers
-      binding.pry
     end
 
   end
