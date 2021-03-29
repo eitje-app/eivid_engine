@@ -30,6 +30,7 @@ module Eivid::RequestService
       @video_link  = @response.dig(:link)
 
       tus_upload_to_vimeo
+      @response
     end
 
     def tus_upload_to_vimeo

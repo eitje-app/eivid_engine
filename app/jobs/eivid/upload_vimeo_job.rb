@@ -10,7 +10,7 @@ module Eivid
       # return
 
       upload_to_vimeo
-      @video_url    = @video_upload["link"]
+      @video_url = @response.dig(:link)
 
       update_record
       notify_front
@@ -19,16 +19,8 @@ module Eivid
 
     private
 
-    # # wrapper method
-    # def upload_to_vimeo      
-    #   @vimeo_client = Eivid::RequestService.connect_user
-    #   @video_upload = @vimeo_client.upload_video(@video_file)
-    # end
-
-    #custom method
     def upload_to_vimeo      
-      response = Eivid::RequestService.upload_video(video_path: @video_path)
-      return
+      @response = Eivid::RequestService.upload_video(video_path: @video_path)
     end
 
     def update_record
