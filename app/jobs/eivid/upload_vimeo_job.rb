@@ -6,9 +6,6 @@ module Eivid
       @video_path   = video_path # temp
       @video_file   = File.open(video_path).read
 
-      # binding.pry
-      # return
-
       upload_to_vimeo
       @video_url = @response.dig(:link)
 
@@ -25,7 +22,7 @@ module Eivid
 
     def update_record
       return unless @video_url
-      @video_record.update(url: @video_url, uploaded: true)
+      @video_record.update(url: @video_url)
     end
 
     def notify_front

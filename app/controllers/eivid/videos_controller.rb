@@ -15,7 +15,7 @@ module Eivid
       temp_path = temp_file.path
       temp_file.close
 
-      UploadVimeoJob.perform_now(video_record: video_record, video_path: temp_path)
+      UploadVimeoJob.perform_later(video_record: video_record, video_path: temp_path)
       render json: video_record
     end
 
