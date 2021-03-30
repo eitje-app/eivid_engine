@@ -4,6 +4,10 @@ require 'tempfile'
 module Eivid
   class VideosController < ApplicationController
 
+    # for local development, run: 
+      # QUEUE=* rake resque:work
+      # rake environment resque:scheduler
+
     def upload_video
       video_record = Video.create(owner_id: params["owner_id"])
       video_file   = params["video_file"]
@@ -21,8 +25,3 @@ module Eivid
 
   end
 end
-
-      # # legacy through CarrierWave
-      # video = VideoUploader.new
-      # video.store!(video_file)
-      # temp_path = video.file.file

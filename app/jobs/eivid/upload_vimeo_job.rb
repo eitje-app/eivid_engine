@@ -2,6 +2,8 @@ module Eivid
   class UploadVimeoJob < ApplicationJob
 
     def perform(video_record:, video_path:)
+      log_perform
+
       @video_record = video_record
       @video_path   = video_path # temp
       @video_file   = File.open(video_path).read
@@ -30,8 +32,13 @@ module Eivid
     end
 
     def check_status
-      CheckVimeoStatusJob.perform_later(video_record: @video_record)
+      CheckVimeoStatusJob.set(wait: 10.seconds).perform_later(video_record: @video_record)
     end
+
+    def log_perform
+      logger = Logger.new "log/test_upload_job_#{Time.now.strftime("%T")}.log"
+      logger.debug "yay, UploadVimeoJob ran!"
+    end 
 
   end
 end

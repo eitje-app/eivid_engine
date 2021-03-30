@@ -2,6 +2,7 @@ module Eivid
   class CheckVimeoStatusJob < ApplicationJob
 
     def perform(video_record:)
+      log_perform
       @video_record = video_record
       set_vimeo_id
       set_video_status
@@ -34,6 +35,11 @@ module Eivid
 
     def rerun_job
       CheckVimeoStatusJob.set(wait: 10.seconds).perform_later(video_record: @video_record)
+    end
+
+    def log_perform
+      logger = Logger.new "log/test_polling_job_#{Time.now.strftime("%T")}.log"
+      logger.debug "yay, CheckVimeoStatusJob ran!"
     end
 
   end
