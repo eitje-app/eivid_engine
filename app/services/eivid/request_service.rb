@@ -1,9 +1,11 @@
 module Eivid::RequestService   
   
-  VIMEO_ID   = "136419353"
-  BASE_URL   = "https://api.vimeo.com"
-  UPLOAD_URL = "#{BASE_URL}/me/videos"
-  FOLDER_URL = "#{BASE_URL}/me/projects"
+  VIMEO_ID          = "136419353"
+  BASE_URL          = "https://api.vimeo.com"
+  UPLOAD_URL        = "#{BASE_URL}/me/videos"
+  FOLDER_URL        = "#{BASE_URL}/me/projects"
+  ADD_TO_FOLDER_URL = -> (folder_id, video_id) { "#{FOLDER_URL}/#{folder_id}/videos/#{video_id}" }
+
 
   class << self
 

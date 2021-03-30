@@ -9,7 +9,8 @@ module Eivid
       # rake environment resque:scheduler
 
     def upload_video
-      video_record = Video.create(owner_id: params["owner_id"])
+      owner        = find_owner(params["external_owner_id"])
+      video_record = Video.create(owner_id: owner.id)
       video_file   = params["video_file"]
 
       file_name, file_ext = video_file.original_filename.split('.') 

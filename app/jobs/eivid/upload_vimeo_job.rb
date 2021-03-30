@@ -13,6 +13,7 @@ module Eivid
       @vimeo_id  = @vimeo_url.split('/').last
 
       update_record
+      add_to_folder
       notify_front
       check_status
     end
@@ -24,7 +25,6 @@ module Eivid
     end
 
     def update_record
-      return unless @vimeo_url
       @video_record.update(url: @vimeo_url, vimeo_id: @vimeo_id)
     end
 
@@ -32,8 +32,12 @@ module Eivid
       # implement
     end
 
+    def add_to_folder
+      Eivid::RequestService.add_video_to_folder(video_record: @video_record)
+    end
+
     def check_status
-      CheckVimeoStatusJob.set(wait: 10.seconds).perform_later(video_record: @video_record)
+      CheckVimeoStatusJob.perform_later(video_record: @video_record)
     end
 
     def log_perform
