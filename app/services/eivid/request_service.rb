@@ -14,10 +14,6 @@ module Eivid::RequestService
     include Eivid::Concerns::RequestService::PollStatus
     include Eivid::Concerns::RequestService::UploadVideo
 
-    def pry
-      binding.pry
-    end
-
     def connect_general
       VimeoMe2::VimeoObject.new(Figaro.env.VIMEO_ACCESS_TOKEN)
     end

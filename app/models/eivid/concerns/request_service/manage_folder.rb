@@ -3,26 +3,27 @@ module Eivid::Concerns::RequestService::ManageFolder
   
   def test
     binding.pry
-    create_folder(org_id: 1)
   end
 
-  def create_folder(org_id:)
-    @folder_name = "org_#{org_id}"
-    HTTParty.post Eivid::RequestService::FOLDER_URL, **create_folder_params
+  def get_all_folders
+    HTTParty.get Eivid::RequestService::FOLDER_URL, headers: folder_headers
   end
 
-  def create_folder_params
+  def create_folder(namespace: "org", id:)
     body = {
-      "name" => @folder_name
+      "name" => "#{namespace}_#{org_id}"
     }
+    HTTParty.post Eivid::RequestService::FOLDER_URL, body: body, headers: folder_headers
+  end
 
+  private
+
+  def folder_headers
     headers = {
       "Authorization" => "bearer #{Figaro.env.VIMEO_ACCESS_TOKEN}",
       "Content-Type"  => "application/json",
       "Accept"        => "application/vnd.vimeo.*+json;version=3.4" 
     }
-
-    { body: body.to_json, headers: headers }
-  end  
+  end
   
 end
