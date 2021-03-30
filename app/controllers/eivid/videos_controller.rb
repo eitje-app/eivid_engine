@@ -29,7 +29,8 @@ module Eivid
     end
 
     def destroy
-      render json: @video.destroy
+      record = RequestService.destroy(video: @video)
+      render json: record
     end
 
     private
