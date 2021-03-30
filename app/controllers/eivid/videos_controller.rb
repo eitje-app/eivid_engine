@@ -1,22 +1,32 @@
 require_dependency "eivid/application_controller"
 require 'tempfile'
 
+# for local development, run: 
+  # QUEUE=* rake resque:work
+  # rake environment resque:scheduler
+
 module Eivid
   class VideosController < ApplicationController
 
-    # for local development, run: 
-      # QUEUE=* rake resque:work
-      # rake environment resque:scheduler
+    before_action :set_owner, only: [:upload_video, :owner_videos]
 
     def upload_video
-      owner  = find_owner params["external_owner_id"]     
-      record = UploadService.upload(owner: owner, video_file: params["video_file"])   
+      record = UploadService.upload(owner: @owner, video_file: video_params["video_file"])   
       render json: record
     end
 
     def owner_videos
-      owner = find_owner params["external_owner_id"]   
-      render json: owner.videos
+      render json: @owner.videos
+    end
+
+    private
+
+    def set_owner
+      @owner = find_owner params["external_owner_id"]
+    end
+
+    def video_params
+      params.permit("video_file")
     end
 
   end
