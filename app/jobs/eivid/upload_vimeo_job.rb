@@ -9,7 +9,8 @@ module Eivid
       @video_file   = File.open(video_path).read
 
       upload_to_vimeo
-      @video_url = @response.dig(:link)
+      @vimeo_url = @response.dig(:link)
+      @vimeo_id  = @vimeo_url.split('/').last
 
       update_record
       notify_front
@@ -23,8 +24,8 @@ module Eivid
     end
 
     def update_record
-      return unless @video_url
-      @video_record.update(url: @video_url)
+      return unless @vimeo_url
+      @video_record.update(url: @vimeo_url, vimeo_id: @vimeo_id)
     end
 
     def notify_front
