@@ -9,6 +9,7 @@ module Eivid
   class VideosController < ApplicationController
 
     before_action :set_owner, only: [:upload_video, :owner_videos]
+    before_action :set_video, only: [:show, :destroy]
 
     def upload_video
       record = UploadService.upload(owner: @owner, video_file: video_params["video_file"])   
@@ -19,10 +20,26 @@ module Eivid
       render json: @owner.videos
     end
 
+    def index
+      render json: Video.all
+    end
+
+    def show
+      render json: @video
+    end
+
+    def destroy
+      render json: @video.destroy
+    end
+
     private
 
     def set_owner
       @owner = find_owner params["external_owner_id"]
+    end
+
+    def set_video
+      @video = Video.find params["id"]
     end
 
     def video_params
