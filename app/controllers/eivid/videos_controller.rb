@@ -9,19 +9,9 @@ module Eivid
       # rake environment resque:scheduler
 
     def upload_video
-      owner        = find_owner(params["external_owner_id"])
-      video_record = Video.create(owner_id: owner.id)
-      video_file   = params["video_file"]
-
-      file_name, file_ext = video_file.original_filename.split('.') 
-      temp_file = Tempfile.new([file_name, ".#{file_ext.downcase}"], "#{Rails.root}/tmp/")
-      
-      temp_file << video_file.tempfile.open.read
-      temp_path = temp_file.path
-      temp_file.close
-
-      UploadVimeoJob.perform_later(video_record: video_record, video_path: temp_path)
-      render json: video_record
+      owner  = find_owner(params["external_owner_id"])      
+      record = UploadService.upload(owner: owner, video_file: params["video_file"])   
+      render json: record
     end
 
   end
