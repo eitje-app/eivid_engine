@@ -10,7 +10,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_03_25_140804) do
+ActiveRecord::Schema.define(version: 2021_03_30_100147) do
+
+  create_table "eivid_owners", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "external_id"
+    t.string "folder_id"
+  end
 
   create_table "eivid_videos", force: :cascade do |t|
     t.datetime "created_at", null: false

@@ -3,7 +3,7 @@ module Eivid::Concerns::RequestService::UploadVideo
 
   def upload_video(video_path:)
     @file        = File.open(video_path) 
-    @request     = HTTParty.post UPLOAD_URL, **upload_video_headers
+    @request     = HTTParty.post Eivid::RequestService::UPLOAD_URL, **upload_video_headers
     @response    = JSON.parse(@request).deep_symbolize_keys
     @upload_link = @response.dig(:upload, :upload_link)
 
