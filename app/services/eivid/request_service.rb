@@ -24,6 +24,8 @@ module Eivid::RequestService
       VimeoMe2::User.new(Figaro.env.VIMEO_ACCESS_TOKEN)
     end
 
+    private
+
     def default_headers
       {
         "Authorization" => "bearer #{Figaro.env.VIMEO_ACCESS_TOKEN}",
