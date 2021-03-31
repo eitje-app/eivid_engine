@@ -1,7 +1,7 @@
 module Eivid
   class CheckVimeoStatusJob < ApplicationJob
 
-    @@maximum_vimeo_polls = 0
+    @@maximum_vimeo_polls = 50
 
     def perform(video_record:)
       log_perform
