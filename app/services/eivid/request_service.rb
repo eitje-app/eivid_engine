@@ -17,14 +17,6 @@ module Eivid::RequestService
     include Eivid::Concerns::RequestService::DeleteVideo
     include Eivid::Concerns::RequestService::TestingMethods
 
-    def connect_general
-      VimeoMe2::VimeoObject.new(Figaro.env.VIMEO_ACCESS_TOKEN)
-    end
-
-    def connect_user
-      VimeoMe2::User.new(Figaro.env.VIMEO_ACCESS_TOKEN)
-    end
-
     private
 
     def default_headers
