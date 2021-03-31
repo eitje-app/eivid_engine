@@ -37,12 +37,12 @@ module Eivid
     end
 
     def check_status
-      CheckVimeoStatusJob.perform_later(video_record: @video_record)
+      CheckVimeoStatusJob.perform_now(video_record: @video_record)
     end
 
     def log_perform
-      logger = Logger.new "log/test_upload_job_#{Time.now.strftime("%T")}.log"
-      logger.debug "yay, UploadVimeoJob ran!"
+      # logger = Logger.new "log/test_upload_job_#{Time.now.strftime("%T")}.log"
+      # logger.debug "yay, UploadVimeoJob ran!"
     end 
 
   end

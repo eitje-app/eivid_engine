@@ -1,9 +1,15 @@
 module Eivid
   class CheckVimeoStatusJob < ApplicationJob
 
+    @@maximum_vimeo_polls = 0
+
     def perform(video_record:)
       log_perform
       @video_record = video_record
+
+      set_status_poll_cnt
+      return report_max_poll unless polling_cnt_valid
+
       set_vimeo_id
       set_video_status
       
@@ -30,16 +36,30 @@ module Eivid
     end
 
     def notify_front
-      #
+      # implement
     end
 
     def rerun_job
-      CheckVimeoStatusJob.set(wait: 10.seconds).perform_later(video_record: @video_record)
+      CheckVimeoStatusJob.perform_now(video_record: @video_record)
     end
 
     def log_perform
-      logger = Logger.new "log/test_polling_job_#{Time.now.strftime("%T")}.log"
-      logger.debug "yay, CheckVimeoStatusJob ran!"
+      # logger = Logger.new "log/test_polling_job_#{Time.now.strftime("%T")}.log"
+      # logger.debug "yay, CheckVimeoStatusJob ran!"
+    end
+
+    def set_status_poll_cnt
+      @status_poll_cnt = @video_record.status_poll_cnt
+    end
+
+    def polling_cnt_valid
+      @status_poll_cnt < @@maximum_vimeo_polls ? @video_record.update(status_poll_cnt: @status_poll_cnt + 1) : false
+    end
+
+    def report_max_poll
+      raise MaximumVimeoPollReachedError.new (
+        "the maximum amount of polling Vimeo (#{@@maximum_vimeo_polls} times) for the status of Eivid::Video ##{@video_record&.id} is reached."
+      )
     end
 
   end
