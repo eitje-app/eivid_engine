@@ -15,6 +15,7 @@ module Eivid::RequestService
     include Eivid::Concerns::RequestService::PollStatus
     include Eivid::Concerns::RequestService::UploadVideo
     include Eivid::Concerns::RequestService::DeleteVideo
+    include Eivid::Concerns::RequestService::TestingMethods
 
     def connect_general
       VimeoMe2::VimeoObject.new(Figaro.env.VIMEO_ACCESS_TOKEN)
