@@ -10,6 +10,7 @@ module Dummy
     config.eager_load_paths << "app/models"
     config.eager_load_paths << "app/errors"
     config.eager_load_paths << "app/services"
+    config.eager_load_paths << "app/dump"
 
     config.load_defaults Rails::VERSION::STRING.to_f
     config.api_only = true
