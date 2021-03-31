@@ -11,7 +11,7 @@ module Eivid::Concerns::RequestService::DeleteVideo
 
   def delete_from_vimeo
     return unless @video.uploaded
-    HTTParty.delete "#{Eivid::RequestService::VIDEOS_URL}/#{@video.vimeo_id}", headers: default_headers
+    HTTParty.delete "#{Eivid::RequestService::DELETE_URL}/#{@video.vimeo_id}", headers: default_headers
   end
   
 end
