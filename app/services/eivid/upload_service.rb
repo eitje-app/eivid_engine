@@ -22,7 +22,7 @@ module Eivid::UploadService
     end
 
     def upload_to_vimeo
-      Eivid::UploadVimeoJob.perform_now(video_record: @video_record, video_path: @temp_path)
+      Eivid::UploadVimeoJob.perform_later(video_record: @video_record, video_path: @temp_path)
     end
 
   end

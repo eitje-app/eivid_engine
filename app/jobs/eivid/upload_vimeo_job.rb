@@ -37,7 +37,7 @@ module Eivid
     end
 
     def check_status
-      CheckVimeoStatusJob.perform_now(video_record: @video_record)
+      CheckVimeoStatusJob.perform_later(video_record: @video_record)
     end
 
     def log_perform

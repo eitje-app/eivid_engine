@@ -8,7 +8,7 @@ module Eivid
       @video_record = video_record
 
       set_status_poll_cnt
-      return report_max_poll unless polling_cnt_valid
+      report_max_poll unless polling_cnt_valid
 
       set_vimeo_id
       set_video_status
@@ -40,7 +40,7 @@ module Eivid
     end
 
     def rerun_job
-      CheckVimeoStatusJob.perform_now(video_record: @video_record)
+      CheckVimeoStatusJob.set(wait: 10.seconds).perform_later(video_record: @video_record)
     end
 
     def log_perform
