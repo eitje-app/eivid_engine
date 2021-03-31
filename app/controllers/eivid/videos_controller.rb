@@ -10,7 +10,7 @@ module Eivid
 
     before_action :set_owner, only: [:upload_video, :owner_videos]
     before_action :set_video, only: [:show, :destroy]
-    before_action :validate_video_file_format, only: [:upload_video]
+    before_action :validate_video_file, only: [:upload_video]
 
     def upload_video
       record = UploadService.upload(owner: @owner, video_file: video_params["video_file"])   
