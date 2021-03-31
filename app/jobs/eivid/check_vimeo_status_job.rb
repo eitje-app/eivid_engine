@@ -23,11 +23,11 @@ module Eivid
     end
 
     def set_video_status
-      @video_status = Eivid::RequestService.get_status(vimeo_id: @vimeo_id)["upload"]["status"]
+      @video_status = Eivid::RequestService.get_status(vimeo_id: @vimeo_id)["status"]
     end
 
     def upload_completed
-      @video_status == "complete"
+      @video_status == "available"
     end
 
     def process_completed

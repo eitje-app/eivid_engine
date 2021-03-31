@@ -3,7 +3,7 @@ module Eivid::Concerns::RequestService::PollStatus
 
   def get_status(vimeo_id:)
     client = connect_general
-    client.get "#{Eivid::RequestService::BASE_URL}/videos/#{vimeo_id}?fields=uri,upload.status,transcode.status"
+    client.get "#{Eivid::RequestService::BASE_URL}/videos/#{vimeo_id}?fields=uri,status"
   end
   
 end
