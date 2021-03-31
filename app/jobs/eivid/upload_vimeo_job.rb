@@ -2,10 +2,8 @@ module Eivid
   class UploadVimeoJob < ApplicationJob
 
     def perform(video_record:, video_path:)
-      log_perform
-
       @video_record = video_record
-      @video_path   = video_path # temp
+      @video_path   = video_path
       @video_file   = File.open(video_path).read
 
       upload_to_vimeo
@@ -14,7 +12,6 @@ module Eivid
 
       update_record
       add_to_folder
-      notify_front
       check_status
     end
 
@@ -28,10 +25,6 @@ module Eivid
       @video_record.update(url: @vimeo_url, vimeo_id: @vimeo_id)
     end
 
-    def notify_front
-      # implement
-    end
-
     def add_to_folder
       Eivid::RequestService.add_video_to_folder(video_record: @video_record)
     end
@@ -40,9 +33,9 @@ module Eivid
       CheckVimeoStatusJob.perform_later(video_record: @video_record)
     end
 
-    def log_perform
-      # logger = Logger.new "log/test_upload_job_#{Time.now.strftime("%T")}.log"
-      # logger.debug "yay, UploadVimeoJob ran!"
+    def log_perform # for dev only
+      logger = Logger.new "log/test_upload_job_#{Time.now.strftime("%T")}.log"
+      logger.debug "yay, UploadVimeoJob ran!"
     end 
 
   end

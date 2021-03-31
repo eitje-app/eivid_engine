@@ -4,7 +4,6 @@ module Eivid
     @@maximum_vimeo_polls = 50
 
     def perform(video_record:)
-      log_perform
       @video_record = video_record
 
       set_status_poll_cnt
@@ -43,11 +42,6 @@ module Eivid
       CheckVimeoStatusJob.set(wait: 10.seconds).perform_later(video_record: @video_record)
     end
 
-    def log_perform
-      # logger = Logger.new "log/test_polling_job_#{Time.now.strftime("%T")}.log"
-      # logger.debug "yay, CheckVimeoStatusJob ran!"
-    end
-
     def set_status_poll_cnt
       @status_poll_cnt = @video_record.status_poll_cnt
     end
@@ -60,6 +54,11 @@ module Eivid
       raise MaximumVimeoPollReachedError.new (
         "the maximum amount of polling Vimeo (#{@@maximum_vimeo_polls} times) for the status of Eivid::Video ##{@video_record&.id} is reached."
       )
+    end
+
+    def log_perform # for dev only
+      logger = Logger.new "log/test_polling_job_#{Time.now.strftime("%T")}.log"
+      logger.debug "yay, CheckVimeoStatusJob ran!"
     end
 
   end
