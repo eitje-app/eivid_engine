@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_04_01_091448) do
+ActiveRecord::Schema.define(version: 2021_04_01_123512) do
 
   create_table "eivid_owners", force: :cascade do |t|
     t.datetime "created_at", null: false
@@ -34,7 +34,6 @@ ActiveRecord::Schema.define(version: 2021_04_01_091448) do
     t.string "url"
     t.boolean "uploaded", default: false
     t.string "vimeo_id"
-    t.integer "status_poll_cnt", default: 0
   end
 
 end
