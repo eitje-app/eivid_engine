@@ -4,7 +4,7 @@ Never stops streaming awesome videos, yay!
 
 ## Installation
 
-Add the following to your application's Gemfile and run bundle install:
+Add the following to your application's Gemfile and run $bundle:
 
 ```ruby
 
@@ -45,18 +45,11 @@ Witin your application's owner model (in this example Organisation), add to foll
 
 ```ruby
 
-has_one  :eivid_owner,  class_name: 'Eivid::Owner', foreign_key: 'external_id'
-has_many :eivid_videos, class_name: 'Eivid::Video', source: :eivid_owner, foreign_key: 'owner_id'
-
-after_create :create_eivid_owner
-
-def create_eivid_owner
-	Eivid::Owner.create(external_id: self.id)
-end
+include Eivid::Concerns::MainApp::Owner
 
 ```
 
-Which generates the following methods within your application:
+Which runs an after_create effect, which creates an Eivid::Owner for every new Organisation record, and generates the following methods within your application:
 
 ```ruby
 
@@ -68,11 +61,29 @@ Organisation.first.eivid_videos
 
 ```
 
-For your application's owner model (in this example Organisation), run the following command, which creates all dedicated folders within Vimeo:
+Besides an owner, an Eivid::Video can belongs to many resources of your main application, e.g. a Post, Manual or Message. This functionality is provided through a join table Eivid::VideoResource, which enables any model of your application to has_many Eivid::VideoResource. In order to create this association, paste the following code in your application's resource holder:
 
 ```ruby
 
-Organisation.find_each { |owner| Eivid::Owner.create(external_id: owner.id) }
+include Eivid::Concerns::MainApp::VideoResource
+
+```
+
+Which generates the following methods within your application (in this example for a Post model):
+
+```ruby
+
+# returns join table records
+Post.first.eivid_video_resources
+
+# returns video records
+Post.first.eivid_videos
+
+# scope which returns all records (here Post instances) which have a video
+Post.has_video
+
+# scope which returns all records (here Post instances) which do not have a video
+Post.has_not_video
 
 ```
 
@@ -84,13 +95,25 @@ $ rails eivid:install:migrations
 $ rails db:migrate
 
 ```
+
+For your application's owner model (in this example Organisation), run the following command, which creates all dedicated folders within Vimeo:
+
+```ruby
+
+Organisation.find_each { |owner| Eivid::Owner.create(external_id: owner.id) }
+
+```
+
 Add the following to your routes.rb:
+
 ```ruby
 
 mount Eivid::Engine => "/eivid"
 
 ```
+
 Set the following environment variables in your application:
+
 ```ruby
 
 VIMEO_ACCESS_TOKEN
