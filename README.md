@@ -11,6 +11,17 @@ Add the following to your application's Gemfile and run $bundle:
 gem 'eivid', git: 'https://github.com/eitje-app/eivid_engine', branch: 'production'
 
 ```
+Or, for development purposes, add instead:
+
+```ruby
+local_eivid_path = "/Users/jurriaanschrofer/Documents/eivid"
+if ENV["RAILS_ENV"] == 'development' && Dir.glob(local_eivid_path).any?
+  gem 'eivid', path: local_eivid_path
+else
+  gem 'eivid', git: 'https://github.com/eitje-app/eivid_engine', branch: 'production'
+end
+```
+
 Add the following file to your app's config/initializers directory:
 
 ```ruby
