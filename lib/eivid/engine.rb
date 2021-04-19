@@ -11,8 +11,8 @@ module Eivid
 
     mattr_accessor :owner_model, :infer_external_owner_id
 
-    owner_model = "owner"
-    infer_external_owner_id = "params['external_owner_id'].to_i"
+    self.owner_model = "owner"
+    self.infer_external_owner_id = "params['external_owner_id'].to_i"
 
     def set_mattr_accessors(&block)
       yield self

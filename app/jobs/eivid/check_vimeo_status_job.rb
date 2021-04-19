@@ -2,6 +2,7 @@ module Eivid
   class CheckVimeoStatusJob < ApplicationJob
 
     retry_on VideoUnavailableError, wait: 10.seconds, attempts: 50
+    after_perform :poll_vimeo_urls
 
     def perform(video_record:)
       @video_record = video_record
@@ -39,6 +40,10 @@ module Eivid
       raise MaximumVimeoPollReachedError.new (
         "the maximum amount of polling Vimeo (#{@@maximum_vimeo_polls} times) for the status of Eivid::Video ##{@video_record&.id} is reached."
       )
+    end
+
+    def poll_vimeo_urls
+      GetVimeoUrlsJob.perform_later(video_record: @video_record, vimeo_id: @vimeo_id)
     end
 
   end

@@ -7,13 +7,14 @@ module Eivid::RequestService
   BASE_URL          = "https://api.vimeo.com"
   VIDEOS_URL        = "#{BASE_URL}/me/videos"
   FOLDER_URL        = "#{BASE_URL}/me/projects"
-  DELETE_URL        = "#{BASE_URL}/videos"
+  PLAIN_VIDEO_URL   = "#{BASE_URL}/videos"
   ADD_TO_FOLDER_URL = -> (folder_id, video_id) { "#{FOLDER_URL}/#{folder_id}/videos/#{video_id}" }
 
   class << self
 
     include Eivid::Concerns::RequestService::ManageFolder
     include Eivid::Concerns::RequestService::PollStatus
+    include Eivid::Concerns::RequestService::GetVideo
     include Eivid::Concerns::RequestService::UploadVideo
     include Eivid::Concerns::RequestService::DeleteVideo
     include Eivid::Concerns::RequestService::TestingMethods

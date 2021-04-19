@@ -7,9 +7,7 @@ module Eivid
       @video_file   = File.open(video_path).read
 
       upload_to_vimeo
-      @vimeo_url = @response.dig(:link)
-      @vimeo_id  = @vimeo_url.split('/').last
-
+      set_attributes
       update_record
       add_to_folder
       check_status
@@ -19,6 +17,19 @@ module Eivid
 
     def upload_to_vimeo      
       @response = Eivid::RequestService.upload_video(video_path: @video_path)
+    end
+
+    def set_attributes
+      set_vimeo_url
+      set_vimeo_id
+    end
+
+    def set_vimeo_url
+      @vimeo_url = @response.dig(:link)
+    end
+
+    def set_vimeo_id
+      @vimeo_id = @vimeo_url.split('/').last
     end
 
     def update_record

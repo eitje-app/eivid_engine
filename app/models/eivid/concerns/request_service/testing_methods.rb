@@ -19,7 +19,7 @@ module Eivid::Concerns::RequestService::TestingMethods
     end
 
     def delete_single_video_from_vimeo(vimeo_id)
-      HTTParty.delete "#{Eivid::RequestService::DELETE_URL}/#{vimeo_id}", headers: default_headers
+      HTTParty.delete "#{Eivid::RequestService::PLAIN_VIDEO_URL}/#{vimeo_id}", headers: default_headers
       puts "deleted #{vimeo_id}"
     end
 
