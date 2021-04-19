@@ -7,8 +7,6 @@ module Eivid::Concerns::RequestService::ManageFolder
 
   def create_folder(namespace:, id:)
     body = { "name" => "#{Rails.env}_#{namespace}_#{id}" }
-
-    binding.pry
     
     @response = HTTParty.post Eivid::RequestService::FOLDER_URL, body: body.to_json, headers: default_headers
     get_folder_id

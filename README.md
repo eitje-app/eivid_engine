@@ -65,10 +65,10 @@ Which runs an after_create effect, which creates an Eivid::Owner for every new O
 ```ruby
 
 # returns a single Eivid::Owner record for the owner, which includes a Vimeo folder_id
-Organisation.first.eivid_owner
+Organisation.first.video_owner
 
 #returns all Eivid::Video records, which each contain an url to the video and vimeo_id
-Organisation.first.eivid_videos
+Organisation.first.videos
 
 ```
 
@@ -85,10 +85,10 @@ Which generates the following methods within your application (in this example f
 ```ruby
 
 # returns join table records
-Post.first.eivid_video_resources
+Post.first.video_resources
 
 # returns video records
-Post.first.eivid_videos
+Post.first.videos
 
 # scope which returns all records (here Post instances) which have a video
 Post.has_video
