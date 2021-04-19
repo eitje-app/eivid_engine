@@ -2,19 +2,22 @@ module Eivid
   
   class Engine < ::Rails::Engine    
     
-    # default engine config
     isolate_namespace Eivid
     config.generators.api_only = true
 
   end
 
-  # mattr_accessor config, with setting defaults first
+  class << self
 
-  self.mattr_accessor :owner_model
-  self.owner_model = "owner"
+    mattr_accessor :owner_model, :infer_external_owner_id
 
-  def self.set_mattr_accessors(&block)
-    yield self
+    owner_model = "owner"
+    infer_external_owner_id = "params['external_owner_id'].to_i"
+
+    def set_mattr_accessors(&block)
+      yield self
+    end
+
   end
 
 end

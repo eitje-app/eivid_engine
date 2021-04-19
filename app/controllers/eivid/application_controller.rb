@@ -6,12 +6,13 @@ module Eivid
     private
 
     def set_owner
-      @owner = Owner.find_by(external_id: params["external_owner_id"]) || report_record_not_found
+      @owner = Owner.find_by(external_id: eval(Eivid.infer_external_owner_id)) || report_record_not_found
     end
 
     def report_record_not_found
       raise MainAppRecordNotFoundError.new( 
-        "the given external_owner_id could not be mapped to your application's owner records"
+        "The given external_owner_id could not be mapped to your application's owner records. 
+        Beware: if you have overwritten the Eivid.infer_external_owner_id setting, the error is dependant on your main application."
       )
     end
 

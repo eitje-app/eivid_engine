@@ -98,6 +98,16 @@ Post.has_not_video
 
 ```
 
+Before each controller action, the the @owner variable is set through through ```params['external_owner_id']```. If you want to overwrite this logic, because your main application already has some kind of standardized before hooks, you can do that by setting the following in your config/initializers/eivid.rb file. This code will be evaluated, instead of ```params['external_owner_id']```.
+
+```ruby
+
+Eivid.set_mattr_accessors do |config|
+  config.infer_external_owner_id = "@env.organisation.id"
+end
+
+```
+
 Create and run the required migrations:
 
 ```bash
