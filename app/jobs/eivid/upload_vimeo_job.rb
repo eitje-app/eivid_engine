@@ -22,7 +22,7 @@ module Eivid
     end
 
     def update_record
-      @video_record.update(url: @vimeo_url, vimeo_id: @vimeo_id)
+      @video_record.update(url_embedded: @vimeo_url, vimeo_id: @vimeo_id)
     end
 
     def add_to_folder

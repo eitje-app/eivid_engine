@@ -15,7 +15,7 @@ module Eivid
     private
 
     def set_vimeo_id
-      @vimeo_id ||= @video_record.url.split('/').last
+      @vimeo_id ||= @video_record.url_embedded.split('/').last
     end
 
     def set_video_status
