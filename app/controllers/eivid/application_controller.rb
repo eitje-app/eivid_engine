@@ -1,5 +1,5 @@
 module Eivid
-  class ApplicationController < ActionController::API
+  class ApplicationController < API::BaseController
 
     include Concerns::VideoValidations
 
