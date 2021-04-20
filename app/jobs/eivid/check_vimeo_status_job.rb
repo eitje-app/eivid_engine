@@ -33,7 +33,8 @@ module Eivid
     end
 
     def notify_front
-      # implement
+      data = { video: @video_record.slice(:id, :user_id), progress: { percentage: 66, step: "The video is available on Vimeo." } }
+      NotifyFrontService.progress('notify_method_on_video_available', data)
     end
 
     def report_max_poll

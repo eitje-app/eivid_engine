@@ -54,7 +54,8 @@ module Eivid
     end
 
     def notify_front
-      # implement
+      data = { video: @video_record.slice(:id, :user_id), progress: { percentage: 100, step: "All video versions are available on Vimeo." } }
+      NotifyFrontService.progress('notify_method_on_versions_available', data)
     end
 
   end

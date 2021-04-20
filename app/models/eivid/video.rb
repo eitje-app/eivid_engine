@@ -2,6 +2,8 @@ module Eivid
   class Video < ApplicationRecord
 
     belongs_to :owner
+    belongs_to :user, optional: true
+    has_many   :video_resources
 
     def owner_id # required for aliassing :owner_id
       super

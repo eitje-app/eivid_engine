@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_04_19_122752) do
+ActiveRecord::Schema.define(version: 2021_04_20_120017) do
 
   create_table "eivid_owners", force: :cascade do |t|
     t.datetime "created_at", null: false
@@ -37,6 +37,7 @@ ActiveRecord::Schema.define(version: 2021_04_19_122752) do
     t.string "url_sd"
     t.string "url_hd"
     t.string "url_thumbnail"
+    t.integer "user_id"
   end
 
 end

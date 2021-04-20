@@ -1,9 +1,10 @@
 module Eivid::UploadService   
   class << self
 
-    def upload(owner:, video_file:)
+    def upload(owner:, user: nil, video_file:)
       @video_file           = video_file
-      @video_record         = Eivid::Video.create(owner_id: owner.id)
+      @video_record         = Eivid::Video.create(owner_id: owner.id, user_id: user&.id)
+      @user                 = user
       @file_name, @file_ext = @video_file.original_filename.split('.') 
       
       create_temp_file

@@ -13,7 +13,7 @@ module Eivid
     before_action :validate_video_file, only: [:upload_video]
 
     def upload_video
-      record = UploadService.upload(owner: @owner, video_file: video_params["video_file"])   
+      record = UploadService.upload(owner: @owner, user: @user, video_file: video_params["video_file"])   
       render json: record
     end
 

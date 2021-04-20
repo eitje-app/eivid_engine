@@ -10,6 +10,8 @@ module Eivid
       set_attributes
       update_record
       add_to_folder
+      
+      notify_front
       check_status
     end
 
@@ -42,6 +44,11 @@ module Eivid
 
     def check_status
       CheckVimeoStatusJob.perform_later(video_record: @video_record)
+    end
+
+    def notify_front
+      data = { video: @video_record.slice(:id, :user_id), progress: { percentage: 33, step: "The video has been uploaded to Vimeo." } }
+      NotifyFrontService.progress('notify_method_on_upload', data)
     end
 
   end
