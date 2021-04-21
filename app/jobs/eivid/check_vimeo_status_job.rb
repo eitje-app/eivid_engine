@@ -10,7 +10,7 @@ module Eivid
       set_vimeo_id
       set_video_status
       
-      upload_completed ? process_completed : (raise Eivid::VideoUnavailableError)
+      upload_completed ? notify_front : (raise Eivid::VideoUnavailableError)
     end
 
     private
@@ -25,11 +25,6 @@ module Eivid
 
     def upload_completed
       @video_status == "available"
-    end
-
-    def process_completed
-      @video_record.update(uploaded: true)
-      notify_front
     end
 
     def notify_front

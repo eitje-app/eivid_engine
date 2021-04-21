@@ -50,7 +50,7 @@ module Eivid
     end
 
     def update_record
-      @video_record.update(url_sd: @url_sd, url_hd: @url_hd, url_thumbnail: @url_thumbnail)
+      @video_record.update(uploaded: true, url_sd: @url_sd, url_hd: @url_hd, url_thumbnail: @url_thumbnail)
     end
 
     def notify_front
