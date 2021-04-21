@@ -5,6 +5,10 @@ module Eivid
     belongs_to :user, optional: true
     has_many   :video_resources
 
+    def self.gemtest
+      puts "yay, de nieuwe versie!"
+    end
+
     def owner_id # required for aliassing :owner_id
       super
     end
