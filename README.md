@@ -99,7 +99,7 @@ Witin your application's owner model (in this example Organisation), add to foll
 
 ```ruby
 
-include Eivid::Concerns::MainApp::Owner
+eivid_owner
 
 ```
 
@@ -123,7 +123,7 @@ Besides an owner, an Eivid::Video can belongs to many resources of your main app
 
 ```ruby
 
-include Eivid::Concerns::MainApp::VideoResource
+eivid_video_resource
 
 ```
 
@@ -155,7 +155,7 @@ Note: for the user_id to be added to a Eivid::Video record, your main applicatio
 
 ```ruby
 
-include Eivid::Concerns::MainApp::User
+eivid_user
 
 ```
 
