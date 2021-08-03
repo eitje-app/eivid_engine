@@ -4,7 +4,7 @@ Gem::Specification.new do |spec|
   
   spec.name        = "eivid"
   spec.version     = Eivid::VERSION
-  
+
   spec.authors     = ["Jurriaan Schrofer"]
   spec.email       = ["jschrofer@gmail.com"]
 
@@ -14,7 +14,7 @@ Gem::Specification.new do |spec|
 
   # spec.metadata["allowed_push_host"] = "https://eitje.app/"
 
-  spec.homepage                    = "https://github.com/eitje-app/eitil_engine"
+  spec.homepage                    = "https://github.com/eitje-app/eivid_engine"
   spec.metadata["homepage_uri"]    = spec.homepage
   spec.metadata["source_code_uri"] = spec.homepage
   spec.metadata["changelog_uri"]   = spec.homepage
