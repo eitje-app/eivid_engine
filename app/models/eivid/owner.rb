@@ -3,7 +3,7 @@ module Eivid
 
     has_many :videos
 
-    validates :external_id, presence: true #, uniqueness: true # comment out for dev only
+    validates :external_id, presence: true, uniqueness: true
 
     before_create :get_folder_id
 
