@@ -38,7 +38,15 @@ module Eivid
     end
 
     def set_url_thumbnail
-      @url_thumbnail = @response&.dig(:pictures, :sizes)&.find { |url| url[:width] == 640 && url[:height] == 360 }&.dig(:link_with_play_button)
+      @url_thumbnail = find_high_res_thumbnail || find_low_res_thumbnail
+    end
+
+    def find_high_res_thumbnail
+      @response&.dig(:pictures, :sizes)&.find { |url| url[:width] == 960 && url[:height] == 540 }&.dig(:link_with_play_button)
+    end
+
+    def find_low_res_thumbnail
+      @response&.dig(:pictures, :sizes)&.find { |url| url[:width] == 640 && url[:height] == 360 }&.dig(:link_with_play_button)
     end
 
     def validate_url_presence
