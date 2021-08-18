@@ -13,7 +13,7 @@ module Eivid
     before_action :validate_video_file, only: [:upload_video]
 
     def upload_video
-      record = UploadService.upload(owner: @owner, user: @user, video_file: video_params["video_file"])   
+      record = UploadService.upload(owner: @owner, user: @user, video_file: video_params["video_file"], video_title: video_title)   
       render json: record
     end
 
@@ -42,6 +42,11 @@ module Eivid
 
     def video_params
       params.permit("video_file")
+    end
+
+    def video_title
+      title = video_params["video_file"].original_filename
+      title.include?('.') ? title.split('.')[0..-2].join('.') : title
     end
 
   end
