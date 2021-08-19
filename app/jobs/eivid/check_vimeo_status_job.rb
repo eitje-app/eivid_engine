@@ -1,7 +1,9 @@
 module Eivid
   class CheckVimeoStatusJob < ApplicationJob
 
-    retry_on VideoUnavailableError, wait: 10.seconds, attempts: 50
+    retry_on   VideoUnavailableError, wait: 10.seconds, attempts: 50
+    discard_on ActiveJob::DeserializationError # when the record is deleted while the job is running
+
     after_perform :poll_vimeo_urls
 
     def perform(video_record:)
