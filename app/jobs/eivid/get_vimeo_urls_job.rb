@@ -38,7 +38,16 @@ module Eivid
     end
 
     def schedule_hd_url_job
-      Eivid::GetVimeoHdUrlJob.set(wait: 5.seconds).perform_later(video_record: @video_record, vimeo_id: @vimeo_id)
+      Eivid::GetVimeoHdUrlJob.set(wait: 5.minutes).perform_later(video_record: @video_record, vimeo_id: @vimeo_id)
+    end
+
+
+    def validate_url_presence
+      raise Eivid::VideoUrlsUnavailableError unless @url_thumbnail && @url_sd
+    end
+
+    def validate_url_thumbnail
+      raise Eivid::VideoUrlsUnavailableError if @url_thumbnail.include? 'video%2Fdefault'
     end
 
   end
