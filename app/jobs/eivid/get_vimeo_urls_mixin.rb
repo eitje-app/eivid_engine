@@ -32,13 +32,5 @@ module Eivid::GetVimeoUrlsMixin
       @response&.dig(:pictures, :sizes)&.find { |url| url[:width] == 640 && url[:height] == 360 }&.dig(:link_with_play_button)
     end
 
-    def validate_url_presence
-      raise Eivid::VideoUrlsUnavailableError unless @url_thumbnail
-    end
-
-    def validate_url_thumbnail
-      raise Eivid::VideoUrlsUnavailableError if @url_thumbnail.include? 'video%2Fdefault'
-    end
-
   end
 end
