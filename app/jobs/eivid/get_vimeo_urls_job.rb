@@ -1,8 +1,11 @@
 module Eivid
   class GetVimeoUrlsJob < ApplicationJob
 
-    retry_on   VideoUrlsUnavailableError, wait: 10.seconds, attempts: 50
-    discard_on ActiveJob::DeserializationError # when the record is deleted while the job is running
+    retry_on(VideoUrlsUnavailableError, wait: 10.seconds, attempts: 50) do |job, error| 
+      raise Eivid::VideoUrlsAllAttemptsFailedError, "failed after the set max attempts (#{job.executions})"
+    end
+
+    discard_on ActiveJob::DeserializationError
 
     def perform(video_record:, vimeo_id:)
       @video_record = video_record
