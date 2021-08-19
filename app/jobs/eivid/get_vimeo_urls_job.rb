@@ -50,7 +50,7 @@ module Eivid
     end
 
     def validate_url_presence
-      raise Eivid::VideoUrlsUnavailableError unless (@url_sd && @url_hd && @url_thumbnail)
+      raise Eivid::VideoUrlsUnavailableError unless @url_thumbnail
     end
 
     def validate_url_thumbnail
