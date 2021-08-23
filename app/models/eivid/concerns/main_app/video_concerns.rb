@@ -12,5 +12,7 @@ module Eivid::Concerns::MainApp::VideoConcerns
     scope :has_processed_video,   -> { joins(:videos).where('eivid_videos.uploaded': true).distinct }
     scope :has_unprocessed_video, -> { joins(:videos).where('eivid_videos.uploaded' => false).distinct }
 
+    scope :has_video_from_user,   -> (user_id) { joins(:videos).where('eivid_videos.user_id = ?', user_id) }
+    
   end
 end
