@@ -6,7 +6,7 @@ module Eivid::Concerns::RequestService::ManageFolder
   end
 
   def create_folder(namespace:, id:)
-    body = { "name" => "#{Rails.env}_#{namespace}_#{id}" }
+    body = { "name" => "#{rails_environment}_#{namespace}_#{id}" }
     
     @response = HTTParty.post Eivid::RequestService::FOLDER_URL, body: body.to_json, headers: default_headers
     get_folder_id
@@ -18,6 +18,11 @@ module Eivid::Concerns::RequestService::ManageFolder
     endpoint  = Eivid::RequestService::ADD_TO_FOLDER_URL.call(folder_id, video_id)
     
     HTTParty.put endpoint, headers: default_headers
+  end
+
+  def rails_environment
+    return "test" if Figaro.env.IS_TEST_SERVER
+    Rails.env
   end
 
   private
