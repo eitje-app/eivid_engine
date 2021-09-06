@@ -5,7 +5,7 @@ module Eivid
 
     validates :external_id, presence: true, uniqueness: true
 
-    after_create :get_folder_id
+    after_commit :get_folder_id, unless: :folder_id
 
     belongs_to :"#{Eivid.owner_model}", foreign_key: "external_id", optional: true
 
