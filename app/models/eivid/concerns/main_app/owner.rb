@@ -7,7 +7,7 @@ module Eivid::Concerns::MainApp::Owner
 
     include Eivid::Concerns::MainApp::VideoConcerns
 
-    after_create :create_eivid_owner
+    after_commit :create_eivid_owner, on: :create
 
     def create_eivid_owner
       Eivid::Owner.create(external_id: self.id)
