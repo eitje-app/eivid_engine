@@ -26,7 +26,7 @@ Gem::Specification.new do |spec|
     "README.md"
   ]
 
-  spec.add_dependency "rails", "~> 5.2.3"
+  spec.add_dependency "rails"
   spec.add_dependency "httparty", "0.17.3"
   spec.add_dependency "amazing_print", "1.3.0"
 
